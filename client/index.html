@@ -17,7 +17,7 @@
         
         <div class="form-group">
             <label for="data">Data</label>
-            <input type="date" id="data" class="form-control" required autofocus/>        
+            <input type="text" id="data" placeholder="dd/mm/aaaa" class="form-control" required autofocus/>        
         </div>    
         
         <div class="form-group">
@@ -45,8 +45,8 @@
     <br>
     
     <div id="negociacoesView"></div>
-    
-    <script src="js/app/models/Negociacao.js"></script>
+    <script src="js/app/polifills/es6.js"></script>
+    <script src="js/app/models/Negociacao.js"></script>    
     <script src="js/app/controllers/NegociacaoController.js"></script>
     <script src="js/app/helpers/DateHelper.js"></script>
     <script src="js/app/services/ProxyFactory.js"></script>
@@ -63,7 +63,7 @@
     
     
     <script>
-        let negociacaoController = new NegociacaoController();
+        var negociacaoController = new NegociacaoController();
     </script>
     
 </body>

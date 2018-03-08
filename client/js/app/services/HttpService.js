@@ -1,12 +1,20 @@
 class HttpService {
 
-    
-    get(url){
+
+
+
+
+    _doRequest(url, method, data){
+        
+
         return new Promise((resolve, reject) => {
 
 
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
+            xhr.open(method, url);
+            if (data){
+                xhr.setRequestHeader("Content-Type", "application/json");
+            }
             //configurações
             //0 requisicao não iniciada
             //1 conexão com servidor estabelecida
@@ -31,8 +39,24 @@ class HttpService {
                 }
 
             }
-            xhr.send();
+            if (data){
+                xhr.send(JSON.stringify(data))
+            } else {
+                xhr.send();
+            }
+            
 
         });
+
+    }
+
+
+    post(url, data){
+        return this._doRequest(url, "POST", data);
+    }
+
+    
+    get(url){
+        return this._doRequest(url,"GET")
     }
 }

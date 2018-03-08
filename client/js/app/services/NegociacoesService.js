@@ -23,6 +23,9 @@ class NegociacaoService {
             })
 
     }
+    adiciona(negociacao){
+        return this._http.post('/negociacoes', negociacao);
+    }
 
     obterNegociacoesDaSemana(cb) {
         return this._obterNegociacoes('negociacoes/semana');

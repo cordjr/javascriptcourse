@@ -16,9 +16,31 @@ class NegociacaoController {
     adiciona(event) {
 
         event.preventDefault();
-        this._listaNegociacoes.adiciona(this._criaNegociacao());
+        
+        let service = new NegociacaoService();
+        try{
+            let negociacao = this._criaNegociacao()
+            let dto = {
+                data: DateHelper.dataParaTexto(negociacao.data),
+                    quantidade:  negociacao.quantidade,
+                    valor: negociacao.valor
+            }
+             
+             service.adiciona(dto).then(()=>
+             {
+                this._listaNegociacoes.adiciona(negociacao);             
+                this._mensagem.texto = 'Negociação adicionada com sucesso';
+             }).catch((error)=>this._mensagem.texto = "Houve um erro no servidor");
 
-        this._mensagem.texto = 'Negociação adicionada com sucesso';
+        } catch(erro){
+            this._mensagem.texto = erro;
+        }
+        
+
+        
+        
+
+        
 
 
         this._limpaFormulario();
