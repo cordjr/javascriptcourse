@@ -29,6 +29,10 @@ class ListaNegociacoes {
         this._negociacoes = [];
     }
 
+    contains(negociaccao){
+        return this._negociacoes.some((n)=> JSON.stringify(n) == JSON.stringify(negociaccao));
+    }
+
     get volumeTotal(){
         return this._negociacoes.reduce((total, n) => total + n.volume, 0.0)
     }

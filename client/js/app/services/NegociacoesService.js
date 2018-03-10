@@ -3,6 +3,29 @@ class NegociacaoService {
         this._http = new HttpService();
     }
 
+    cadastrar(negociacao){
+
+        return new Promise((resolve, reject)=>{
+            ConnectionFactory.getConnection().then(cnn => {
+                let negociacao = this._criaNegociacao()
+                new NegociacaoDao(cnn)
+                    .adiciona(negociacao)
+                    .then(() => {
+                        resolve(negociacao)
+                    }).catch(err => {
+                        console.log(err)
+                        reject(err)
+                    });
+    
+            }).catch(err => {
+                console.log(err);
+                reject(err);
+            });
+
+        });
+
+    }
+
 
     _obterNegociacoes(endpont) {
 
