@@ -30,7 +30,7 @@ class ListaNegociacoes {
     }
 
     contains(negociaccao){
-        return this._negociacoes.some((n)=> JSON.stringify(n) == JSON.stringify(negociaccao));
+        return this._negociacoes.some((n)=> n.equals(negociaccao));
     }
 
     get volumeTotal(){

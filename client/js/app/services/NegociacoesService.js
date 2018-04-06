@@ -3,11 +3,69 @@ class NegociacaoService {
         this._http = new HttpService();
     }
 
-    cadastrar(negociacao){
+    lista() {
+        return new Promise((resolve, reject) => {
+            ConnectionFactory.getConnection()
+                .then(cnn => new NegociacaoDao(cnn))
+                .then(dao => dao.listaTodos())
+                .then(lista => resolve(lista))
+                .catch(err => reject(err));
 
-        return new Promise((resolve, reject)=>{
+        });
+
+
+
+    }
+    obterNegociacoes() {
+        return new Promise((resolve, reject) => {
+
+            let all = Promise.all([
+                this.obterNegociacoesDaSemana(),
+                this.obterNegociacoesDaSemanaAnterior(),
+                this.obterNegociacoesDaSemanaRetrasada()
+            ]).then(negociacoes => {
+                
+                let all = negociacoes.reduce(
+                    (flatArray, array) => flatArray.concat(array), [])
+                console.log("lista filtrada =>", all);
+               resolve(all);
+
+
+
+            }).catch(err => reject(err));
+            
+
+
+        })
+
+
+    }
+    importa(listaAtual) {
+        return this.obterNegociacoes().then(
+
+            (lista) => {
+                
+                let listaFiltrada = lista
+                    .filter(n => !listaAtual
+                        .some(nExistente => n.isEquals(nExistente))
+                    )
+                console.log(listaFiltrada)
+                return listaFiltrada;
+            }
+        )
+            .catch(err => {
+                console.log(err);
+                throw new Error("Não foi possível imporar as neogociações");
+            })
+    }
+
+
+
+    cadastra(negociacao) {
+
+        return new Promise((resolve, reject) => {
             ConnectionFactory.getConnection().then(cnn => {
-                let negociacao = this._criaNegociacao()
+
                 new NegociacaoDao(cnn)
                     .adiciona(negociacao)
                     .then(() => {
@@ -16,7 +74,7 @@ class NegociacaoService {
                         console.log(err)
                         reject(err)
                     });
-    
+
             }).catch(err => {
                 console.log(err);
                 reject(err);
@@ -24,6 +82,21 @@ class NegociacaoService {
 
         });
 
+    }
+
+    apagaTodos() {
+        return new Promise((resolve, reject) => {
+            ConnectionFactory.getConnection()
+                .then(cnn => new NegociacaoDao(cnn))
+                .then(dao => dao.apagaTodos())
+                .then(() => {
+                    resolve();
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+        });
     }
 
 
@@ -43,12 +116,18 @@ class NegociacaoService {
                     reject("Não foi possível obter negociações da semana");
 
                 });
-            })
+        })
 
     }
-    adiciona(negociacao){
+
+
+
+
+    adiciona(negociacao) {
         return this._http.post('/negociacoes', negociacao);
     }
+
+
 
     obterNegociacoesDaSemana(cb) {
         return this._obterNegociacoes('negociacoes/semana');

@@ -5,6 +5,7 @@ class HttpService {
 
 
 	_doRequest(url, method, data){
+		
         
 
 		return new Promise((resolve, reject) => {
@@ -55,8 +56,17 @@ class HttpService {
 		return this._doRequest(url, "POST", data);
 	}
 
+	_handleError(res){
+		if( !res.ok){
+			throw new Error(res.statuText);			
+		}
+		return res;
+	}
+
     
 	get(url){
-		return this._doRequest(url,"GET")
+		return fetch(url)
+		.then(res=> this._handleError(res) )
+		.then(res=> res.json());
 	}
 }
