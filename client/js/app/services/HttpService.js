@@ -53,7 +53,13 @@ class HttpService {
 
 
 	post(url, data){
-		return this._doRequest(url, "POST", data);
+		return fetch(url, {
+			haeders:{'Content-type': 'application/json'},
+			method: 'POST',
+			body: JSON.stringify(data)
+		}).then(res=>this._handleError(res))
+		.then(res=>res.json());
+		//return this._doRequest(url, "POST", data);
 	}
 
 	_handleError(res){

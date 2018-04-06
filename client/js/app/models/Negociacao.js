@@ -30,7 +30,7 @@ class Negociacao {
 
     isEquals(outraNegociacao){
         
-        return (this.date.getTime() == outraNegociacao.data.getTime()
+        return (this.data.getTime() == outraNegociacao.data.getTime()
                 && this.valor == outraNegociacao.valor);
         
     }
