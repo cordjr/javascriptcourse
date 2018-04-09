@@ -1,39 +1,60 @@
-class ListaNegociacoes {
+"use strict";
 
-    constructor() {
-        
-        this._negociacoes = [];
-        
-    }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    adiciona(negociacao) {
-        
-        this._negociacoes.push(negociacao);
-    }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    ordena(criterio){
-        this._negociacoes.sort(criterio);
-    }
-    
-    inverte(){
-        this._negociacoes.reverse();
-    }
+var ListaNegociacoes = function () {
+    function ListaNegociacoes() {
+        _classCallCheck(this, ListaNegociacoes);
 
-    get negociacoes() {
-        
-        return [].concat(this._negociacoes);
-    }
-
-    esvazia() {
-        
         this._negociacoes = [];
     }
 
-    contains(negociaccao){
-        return this._negociacoes.some((n)=> n.equals(negociaccao));
-    }
+    _createClass(ListaNegociacoes, [{
+        key: "adiciona",
+        value: function adiciona(negociacao) {
 
-    get volumeTotal(){
-        return this._negociacoes.reduce((total, n) => total + n.volume, 0.0)
-    }
-}
+            this._negociacoes.push(negociacao);
+        }
+    }, {
+        key: "ordena",
+        value: function ordena(criterio) {
+            this._negociacoes.sort(criterio);
+        }
+    }, {
+        key: "inverte",
+        value: function inverte() {
+            this._negociacoes.reverse();
+        }
+    }, {
+        key: "esvazia",
+        value: function esvazia() {
+
+            this._negociacoes = [];
+        }
+    }, {
+        key: "contains",
+        value: function contains(negociaccao) {
+            return this._negociacoes.some(function (n) {
+                return n.equals(negociaccao);
+            });
+        }
+    }, {
+        key: "negociacoes",
+        get: function get() {
+
+            return [].concat(this._negociacoes);
+        }
+    }, {
+        key: "volumeTotal",
+        get: function get() {
+            return this._negociacoes.reduce(function (total, n) {
+                return total + n.volume;
+            }, 0.0);
+        }
+    }]);
+
+    return ListaNegociacoes;
+}();
+//# sourceMappingURL=ListaNegociacoes.js.map
