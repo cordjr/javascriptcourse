@@ -15,6 +15,7 @@ class NegociacaoDao {
 			request.onerror = e => {
 				console.log(e.target.error)
 				reject("Ocorreu um erro ")
+				
 			}
 		});
 	}

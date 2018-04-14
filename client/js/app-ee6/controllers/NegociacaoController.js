@@ -1,3 +1,12 @@
+import {ListaNegociacoes} from '../models/ListaNegociacoes';
+import {Mensagem} from '../models/Mensagem';
+import {NegociacaoView} from '../views/NegociacaoView';
+import {MensagemView} from '../views/MensagemView';
+import {NegociacaoService} from '../services/NegociacaoService';
+import {DateHelper} from '../helpers/DateHelper';
+import {Bind} from '../helpers/Bind';
+import {Negociacao} from '../models/Negociacao';
+
 class NegociacaoController {
 
 	constructor() {
@@ -13,10 +22,6 @@ class NegociacaoController {
 		this._ordemAtual = '';
 		this._service = new NegociacaoService();
 		this._init();
-
-
-
-
 
 	}
 
@@ -51,6 +56,7 @@ class NegociacaoController {
 			}).catch(e => {
 				console.log(e);
 				this._mensagem.texto = "Houve um erro ao cadastrar";
+
 
 			});
 

@@ -1,4 +1,8 @@
-class NegociacaoService {
+import { HttpService } from '../services/HttpService';
+import { NegociacaoDao } from '../dao/NegociacaoDao';
+import { Negociacao } from '../models/Negociacao';
+import { ConnectionFactory } from './ConnectionFactory';
+export class NegociacaoService {
     constructor() {
         this._http = new HttpService();
     }
@@ -24,16 +28,16 @@ class NegociacaoService {
                 this.obterNegociacoesDaSemanaAnterior(),
                 this.obterNegociacoesDaSemanaRetrasada()
             ]).then(negociacoes => {
-                
+
                 let all = negociacoes.reduce(
                     (flatArray, array) => flatArray.concat(array), [])
                 console.log("lista filtrada =>", all);
-               resolve(all);
+                resolve(all);
 
 
 
             }).catch(err => reject(err));
-            
+
 
 
         })
@@ -44,7 +48,7 @@ class NegociacaoService {
         return this.obterNegociacoes().then(
 
             (lista) => {
-                
+
                 let listaFiltrada = lista
                     .filter(n => !listaAtual
                         .some(nExistente => n.isEquals(nExistente))
